@@ -13,7 +13,8 @@ public class Tree {
         codes = new Hashtable<>();
     }
 
-    public Tree(Dictionary<Character, Integer> FrequencyIndex) {
+    public Tree(String text) {
+        Dictionary<Character, Integer> FrequencyIndex = FrequencyIndexer.index(text);
         this.root = build(FrequencyIndex);
         codes = new Hashtable<>();
         generateCodes();
@@ -70,5 +71,18 @@ public class Tree {
 
     public Dictionary<Character, String> getCodes() {
         return codes;
+    }
+
+    public Character getCharacter(String code) {
+        for(Character c: Collections.list(codes.keys())) {
+            if(codes.get(c).equals(code)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    public boolean isCode(String code) {
+        return getCharacter(code) != null;
     }
 }

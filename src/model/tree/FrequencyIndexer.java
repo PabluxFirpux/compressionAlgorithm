@@ -1,4 +1,4 @@
-package model;
+package model.tree;
 
 import java.util.Dictionary;
 import java.util.Hashtable;

@@ -2,19 +2,51 @@ package main;
 
 import model.Decoder;
 import model.Encoder;
+import model.Parser;
+import model.fhelper;
 import model.tree.Tree;
 
 public class app {
     public static void main(String[] args) {
-        String text = "As you noticed, the if is checked at each loop although you know that it will be invalidated only on the last loop. A good way to avoid this is to use a while loop instead of a for loop.";
+        createFile();
+        decodeFile();
+    }
+
+    public static void createFile() {
+        String path = "./test.txt";
+        String text;
+        try {
+            text = fhelper.getFileContents(path);
+        } catch (Exception e) {
+            System.out.println("File not found");
+            return;
+        }
         Tree tree = new Tree(text);
-
-        System.out.print("Coded text: ");
         String encodedText = Encoder.encode(text, tree);
-        System.out.println(encodedText);
 
-        System.out.println("Decoded text: ");
-        String decodedText = Decoder.decode(encodedText, tree);
-        System.out.println(decodedText);
+        String contents = Parser.parseTable(tree.getCodes()) + "\n" + encodedText;
+        try {
+            fhelper.writeToFile("./mec.pfc", contents);
+        } catch (Exception e) {
+            System.out.println("File not found");
+        }
+    }
+
+    public static void decodeFile() {
+        String path = "./mec.pfc";
+        String text;
+        try {
+            text = fhelper.getFileContents(path);
+        } catch (Exception e) {
+            System.out.println("File not found");
+            return;
+        }
+        String decodedText = Decoder.decodeFile(text);
+
+        try {
+            fhelper.writeToFile("./result.txt", decodedText);
+        } catch (Exception e) {
+            System.out.println("File not found");
+        }
     }
 }

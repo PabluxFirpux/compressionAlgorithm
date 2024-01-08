@@ -34,4 +34,24 @@ public class Decoder {
         }
         return decodedText.toString();
     }
+
+    public static String decodeFile(String text) {
+        String[] parts = splitFile(text);
+        if(parts == null) return null;
+        Tree tree = new Tree(Parser.parseCodes(parts[0]));
+        return decode(parts[1], tree);
+    }
+
+    private static String[] splitFile(String text) {
+        if(text.charAt(0) != '{') return null;
+        for(int i = 0; i < text.length(); i++) {
+            if(text.charAt(i) == '}' && text.charAt(i-1) != '"') {
+                String[] parts = new String[2];
+                parts[0] = text.substring(0, i + 1);
+                parts[1] = text.substring(i + 2);
+                return parts;
+            }
+        }
+        return null;
+    }
 }

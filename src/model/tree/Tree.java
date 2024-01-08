@@ -8,9 +8,8 @@ public class Tree {
 
     private Dictionary<Character, String> codes;
 
-    public Tree(Node root) {
-        this.root = root;
-        codes = new Hashtable<>();
+    public Tree(Dictionary<Character, String> codes) {
+        this.codes = codes;
     }
 
     public Tree(String text) {

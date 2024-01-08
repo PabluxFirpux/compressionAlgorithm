@@ -22,7 +22,7 @@ public class Encoder {
             }
             encodedText.append((char) Integer.parseInt(binaryText.substring(i, i + 8), 2));
         }
-        encodedText.append((char) Integer.parseInt(surplus.toString(), 2));
+        if(!surplus.isEmpty()) encodedText.append((char) Integer.parseInt(surplus.toString(), 2));
         return encodedText.toString();
     }
 }

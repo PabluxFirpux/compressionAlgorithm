@@ -1,39 +1,27 @@
 package main;
 
-import model.Decoder;
-import model.Encoder;
-import model.Parser;
-import model.fhelper;
+import model.*;
 import model.tree.Tree;
 
 public class app {
     public static void main(String[] args) {
-        createFile();
-        decodeFile();
+       //createFileOOP();
+       // decodeFile();
+        createDir();
     }
 
-    public static void createFile() {
-        String path = "./test.txt";
-        String text;
-        try {
-            text = fhelper.getFileContents(path);
-        } catch (Exception e) {
-            System.out.println("File not found");
-            return;
-        }
-        Tree tree = new Tree(text);
-        String encodedText = Encoder.encode(text, tree);
+    public static void createFileOOP() {
+        CompFile file = new CompFile("./test.txt");
+        file.save();
+    }
 
-        String contents = Parser.parseTable(tree.getCodes()) + "\n" + encodedText;
-        try {
-            fhelper.writeToFile("./mec.pfc", contents);
-        } catch (Exception e) {
-            System.out.println("File not found");
-        }
+    public static  void createDir() {
+        CompDir dir = new CompDir("./pruebas");
+        dir.save();
     }
 
     public static void decodeFile() {
-        String path = "./mec.pfc";
+        String path = "./test.pfc";
         String text;
         try {
             text = fhelper.getFileContents(path);
@@ -44,9 +32,9 @@ public class app {
         String decodedText = Decoder.decodeFile(text);
 
         try {
-            fhelper.writeToFile("./result.txt", decodedText);
+            fhelper.writeToFile("./banana/result.txt", decodedText);
         } catch (Exception e) {
-            System.out.println("File not found");
+            e.printStackTrace();
         }
     }
 }

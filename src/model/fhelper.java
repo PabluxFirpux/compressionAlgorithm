@@ -1,8 +1,12 @@
 package model;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.util.ArrayList;
 
 public class fhelper {
+
+    private static String extens = "pfc";
     public static String getExtension(String path) {
         String[] parts = path.split("\\.");
         return parts[parts.length - 1];
@@ -13,6 +17,16 @@ public class fhelper {
         return parts[parts.length - 2];
     }
 
+    public static String getDirectoryPath(String path) {
+        String[] parts = path.split("\\.");
+        String s = "";
+        for(int i = 0; i < parts.length; i++) {
+            s += parts[i];
+            s += ".";
+        }
+        return s;
+    }
+
     public static String getDirectory(String path) {
         String[] parts = path.split("\\.");
         return parts[parts.length - 3];
@@ -21,6 +35,11 @@ public class fhelper {
     public static String getFileName(String path) {
         String[] parts = path.split("\\.");
         return parts[parts.length - 2] + "." + parts[parts.length - 1];
+    }
+
+    public static String getFilePathWithExtension(String path) {
+        String[] parts = path.split("\\.");
+        return parts[parts.length - 3] + "." + parts[parts.length - 2] + "." + extens;
     }
 
     public static String getFilePath(String path) {
@@ -48,11 +67,26 @@ public class fhelper {
 
     public static void writeToFile(String path, String contents) throws IOException {
         File file = new File(path);
+        File dir = new File(getDirectory(path));
+        dir.mkdirs();
+        //file.createNewFile();
         if(!file.exists()) {
             file.createNewFile();
         }
         FileWriter fw = new FileWriter(file);
         fw.write(contents);
         fw.close();
+    }
+
+    public static ArrayList<String> getFiles(String path) {
+        ArrayList<String> paths = new ArrayList<>();
+        File folder = new File(path);
+        File[] listOfFiles = folder.listFiles();
+        for(File file: listOfFiles) {
+            if(file.isFile()) {
+                paths.add(file.getPath());
+            }
+        }
+        return paths;
     }
 }

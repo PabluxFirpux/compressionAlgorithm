@@ -28,8 +28,14 @@ public class fhelper {
     }
 
     public static String getDirectory(String path) {
-        String[] parts = path.split("\\.");
-        return parts[parts.length - 3];
+        String[] parts = path.split("");
+        int x = 0;
+        for(int i = 0; i < parts.length; i++) {
+            if(parts[i].equals("\\") || parts[i].equals("/")) {
+                x = i;
+            }
+        }
+        return path.substring(0, x);
     }
 
     public static String getFileName(String path) {
@@ -67,6 +73,7 @@ public class fhelper {
 
     public static void writeToFile(String path, String contents) throws IOException {
         File file = new File(path);
+        //File dir = new File(getDirectory(path));
         File dir = new File(getDirectory(path));
         dir.mkdirs();
         //file.createNewFile();
@@ -74,7 +81,7 @@ public class fhelper {
             file.createNewFile();
         }
         FileWriter fw = new FileWriter(file);
-        fw.write(contents);
+        if(contents != null) fw.write(contents);
         fw.close();
     }
 

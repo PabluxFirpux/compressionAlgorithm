@@ -6,7 +6,7 @@ public class CompDir {
     private String path;
     private ArrayList<CompFile> files;
     private String text;
-    private static final String separator = "QEOGQOWEGHQOEBGFOQGBQJGBOEBQNbngjgj";
+    public static final String SEPARATOR = "QEOGQOWEGHQOEBGFOQGBQJGBOEBQNbngjgj";
 
     public CompDir(String path) {
         this.path = fhelper.getDirectoryPath(path) + "pfc";
@@ -25,9 +25,8 @@ public class CompDir {
         for(String p: paths) {
             files.add(new CompFile(p));
         }
-        text += separator;
         for(CompFile f: files) {
-            text += f.toString() + separator;
+            text += f.toString() + SEPARATOR;
         }
     }
 

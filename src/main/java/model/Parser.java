@@ -41,4 +41,8 @@ public class Parser {
         buffer.append("}");
         return buffer.toString();
     }
+
+    public static String[] parseDir(String text) {
+        return text.split(CompDir.SEPARATOR);
+    }
 }

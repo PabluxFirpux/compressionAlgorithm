@@ -4,16 +4,20 @@ import model.tree.Tree;
 
 public class CompFile {
     private String path;
+
+    private final String ogPath;
     private String table;
     private String text;
 
     public CompFile(String path, String table, String text) {
+        this.ogPath = path;
         this.path = path;
         this.table = table;
         this.text = text;
     }
 
     public CompFile(String path) {
+        this.ogPath = path;
         generate(path);
     }
 
@@ -32,7 +36,7 @@ public class CompFile {
     }
 
     public void save() {
-        String contents = table + "\n" + text;
+        String contents = ogPath + "\n" + table + "\n" + text;
         try {
             fhelper.writeToFile(path, contents);
         } catch (Exception e) {
@@ -41,6 +45,6 @@ public class CompFile {
     }
 
     public String toString() {
-        return path + "\n" + table + "\n" + text;
+        return ogPath + "\n" + table + "\n" + text;
     }
 }

@@ -12,6 +12,11 @@ public class fhelper {
         return parts[parts.length - 1];
     }
 
+    public static boolean isDirectory(String path) {
+        File file = new File(path);
+        return file.isDirectory();
+    }
+
     public static String getName(String path) {
         String[] parts = path.split("\\.");
         return parts[parts.length - 2];
@@ -44,8 +49,14 @@ public class fhelper {
     }
 
     public static String getFilePathWithExtension(String path) {
-        String[] parts = path.split("\\.");
-        return parts[parts.length - 3] + "." + parts[parts.length - 2] + "." + extens;
+        String[] parts = path.split("");
+        int x = 0;
+        for (int i = 0; i < parts.length; i++) {
+            if(parts[i].equals(".")) {
+                x = i;
+            }
+        }
+        return path.substring(0, x+1) + extens;
     }
 
     public static String getFilePath(String path) {

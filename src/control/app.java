@@ -2,27 +2,28 @@ package control;
 
 import model.*;
 
+import java.sql.Time;
+
 public class app {
 
     public static void main(String[] args) {
-       //createFileOOP();
-        //decodeFile();
-        //createDir();
-        fhelper.getExtension("./mec");
-        if (args.length < 2) {
+        Time time = new Time(System.currentTimeMillis());
+        if (args.length < 1) {
             System.out.println("No arguments given");
             return;
-        } else if(args.length > 2) {
+        } else if(args.length > 1) {
             System.out.println("Too many arguments");
             return;
         }
-        if (fhelper.getExtension(args[1]).equals("pfc")) {
-            scanDir(args[1]);
-        } else if (fhelper.getExtension(args[1]).startsWith("/") || fhelper.getExtension(args[1]).startsWith("\\")) {
-            createDir(args[1]);
+        if (fhelper.getExtension(args[0]).equals("pfc")) {
+            scanDir(args[0]);
+        } else if (fhelper.isDirectory(args[0])) {
+            createDir(args[0]);
         } else {
-            createFileOOP(args[1]);
+            createFileOOP(args[0]);
         }
+        Time time2 = new Time(System.currentTimeMillis());
+        System.out.println((time2.getTime() - time.getTime())/1000.0 + " seconds");
     }
 
     public static void scanDir(String path) {

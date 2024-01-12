@@ -32,6 +32,7 @@ public class app {
     }
 
     public static void scanFile() {
+        //Turns out the algorithm used for decompressing directories also works if it's a single file, so this is redundant but I'm keeping it here just for reference
         DecompFile file = new DecompFile("./test.pfc", DecompFile.Type.FILE);
         file.save();
     }
@@ -44,23 +45,5 @@ public class app {
     public static  void createDir(String path) {
         CompDir dir = new CompDir(path);
         dir.save();
-    }
-
-    public static void decodeFile() {
-        String path = "./test.pfc";
-        String text;
-        try {
-            text = fhelper.getFileContents(path);
-        } catch (Exception e) {
-            System.out.println("File not found");
-            return;
-        }
-        String decodedText = Decoder.decodeFile(text);
-
-        try {
-            fhelper.writeToFile("./banana/result.txt", decodedText);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

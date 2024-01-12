@@ -103,6 +103,8 @@ public class fhelper {
         for(File file: listOfFiles) {
             if(file.isFile()) {
                 paths.add(file.getPath());
+            } else if (file.isDirectory()) {
+                paths.addAll(getFiles(file.getPath()));
             }
         }
         return paths;

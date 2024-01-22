@@ -59,7 +59,7 @@ public class Parser {
 
             if(pair.length != 2) return codes;
             if(pair[0].length() != 3) return codes;
-            if(pair[0].charAt(0) != '"' || pair[0].charAt(0) != '"') return codes;
+            if(pair[0].charAt(0) != '"' || pair[0].charAt(2) != '"') return codes;
             Character character = pair[0].charAt(1);
             String code = pair[1];
             codes.put(code, character);

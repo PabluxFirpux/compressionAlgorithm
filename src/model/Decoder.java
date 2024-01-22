@@ -50,7 +50,7 @@ public class Decoder {
             if(text.charAt(i) == '}' && text.charAt(i-1) != '"') {
                 String[] parts = new String[2];
                 parts[0] = text.substring(0, i + 1);
-                parts[1] = text.substring(i + 2);
+                parts[1] = text.substring(i + 1);
                 return parts;
             }
         }

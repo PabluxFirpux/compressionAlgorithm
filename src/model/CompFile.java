@@ -36,7 +36,7 @@ public class CompFile {
     }
 
     public void save() {
-        String contents = ogPath + "\n" + table + "\n" + text;
+        String contents = ogPath + "\n" + table + text;
         try {
             fhelper.writeToFile(path, contents);
         } catch (Exception e) {
@@ -45,6 +45,6 @@ public class CompFile {
     }
 
     public String toString() {
-        return ogPath + "\n" + table + "\n" + text;
+        return ogPath + "\n" + table + text;
     }
 }

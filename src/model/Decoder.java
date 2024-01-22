@@ -3,15 +3,17 @@ package model;
 import model.tree.Node;
 import model.tree.Tree;
 
+import java.util.Dictionary;
+
 public class Decoder {
-    public static String decode(String asciitext, Tree tree) {
+    public static String decode(String asciitext, Dictionary<String, Character> codes) {
         String text = Bindecode(asciitext);
         StringBuilder decodedText = new StringBuilder();
         StringBuffer buffer = new StringBuffer();
         for(Character c: text.toCharArray()) {
             buffer.append(c);
-            if(tree.isCode(buffer.toString())) {
-                decodedText.append(tree.getCharacter(buffer.toString()));
+            if(codes.get(buffer.toString()) != null) {
+                decodedText.append(codes.get(buffer.toString()));
                 buffer = new StringBuffer();
             }
         }
@@ -38,8 +40,8 @@ public class Decoder {
     public static String decodeFile(String text) {
         String[] parts = splitFile(text);
         if(parts == null) return null;
-        Tree tree = new Tree(Parser.parseCodes(parts[0]));
-        return decode(parts[1], tree);
+        Dictionary<String, Character> codes = Parser.getDecodeDictionary(parts[0]);
+        return decode(parts[1], codes);
     }
 
     private static String[] splitFile(String text) {
@@ -48,7 +50,7 @@ public class Decoder {
             if(text.charAt(i) == '}' && text.charAt(i-1) != '"') {
                 String[] parts = new String[2];
                 parts[0] = text.substring(0, i + 1);
-                parts[1] = text.substring(i + 2);
+                parts[1] = text.substring(i + 1);
                 return parts;
             }
         }

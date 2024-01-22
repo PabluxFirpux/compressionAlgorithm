@@ -1,7 +1,9 @@
 package model;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class fhelper {
@@ -65,7 +67,7 @@ public class fhelper {
     }
 
     public static String getFileContents(String path) throws FileNotFoundException {
-        String contents = "";
+        /*String contents = "";
         File file = new File(path);
         FileInputStream fis = new FileInputStream(file);
         BufferedInputStream bis = new BufferedInputStream(fis);
@@ -79,6 +81,17 @@ public class fhelper {
             e.printStackTrace();
         }
         contents = contents.substring(0, contents.length() - 1);
+        return contents;*/
+        String contents = "";
+        File file = new File(path);
+        FileInputStream fis = new FileInputStream(file);
+        byte[] data = new byte[(int) file.length()];
+        try {
+            fis.read(data, 0, data.length);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        contents = new String(data, StandardCharsets.ISO_8859_1);
         return contents;
     }
 
@@ -91,7 +104,7 @@ public class fhelper {
         if(!file.exists()) {
             file.createNewFile();
         }
-        FileWriter fw = new FileWriter(file);
+        FileWriter fw = new FileWriter(file, StandardCharsets.ISO_8859_1);
         if(contents != null) fw.write(contents);
         fw.close();
     }

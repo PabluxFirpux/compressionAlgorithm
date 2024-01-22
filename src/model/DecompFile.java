@@ -25,13 +25,13 @@ public class DecompFile {
             System.out.println(e.getMessage());
             return;
         }
-        String[] parts = codedText.split("\n", 2);
+        String[] parts = codedText.split("[\n](?<![\"][\n])", 2);
         this.path = parts[0];
         this.decodedText = Decoder.decodeFile(parts[1]);
     }
 
     private void generateDir(String codedText) {
-        String[] parts = codedText.split("\n", 2);
+        String[] parts = codedText.split("[\n](?<![\"][\n])", 2);
         this.path = parts[0];
         this.decodedText = Decoder.decodeFile(parts[1]);
     }

@@ -67,21 +67,6 @@ public class fhelper {
     }
 
     public static String getFileContents(String path) throws FileNotFoundException {
-        /*String contents = "";
-        File file = new File(path);
-        FileInputStream fis = new FileInputStream(file);
-        BufferedInputStream bis = new BufferedInputStream(fis);
-        BufferedReader dis = new BufferedReader(new InputStreamReader(bis));
-        try {
-            while (dis.ready()) {
-                contents += dis.readLine();
-                contents += "\n";
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        contents = contents.substring(0, contents.length() - 1);
-        return contents;*/
         String contents = "";
         File file = new File(path);
         FileInputStream fis = new FileInputStream(file);
@@ -97,16 +82,38 @@ public class fhelper {
 
     public static void writeToFile(String path, String contents) throws IOException {
         File file = new File(path);
-        //File dir = new File(getDirectory(path));
         File dir = new File(getDirectory(path));
         dir.mkdirs();
-        //file.createNewFile();
+        if (file.exists()) {
+            while (file.exists()) {
+                path = getCopiedFileName(path);
+                file = new File(path);
+            }
+        }
         if(!file.exists()) {
             file.createNewFile();
         }
         FileWriter fw = new FileWriter(file, StandardCharsets.ISO_8859_1);
         if(contents != null) fw.write(contents);
         fw.close();
+    }
+
+    public static String getValidPath(String path) {
+        File file = new File(path);
+        if(!file.exists()) {
+            return path;
+        } else {
+            try {
+                return getValidPath(getCopiedFileName(path));
+            } catch (Exception e) {
+                return path + "_copy";
+            }
+        }
+    }
+
+    private static String getCopiedFileName(String path) {
+        String[] parts = path.split("\\.");
+        return parts[parts.length - 2] + "_copy." + parts[parts.length - 1];
     }
 
     public static ArrayList<String> getFiles(String path) {

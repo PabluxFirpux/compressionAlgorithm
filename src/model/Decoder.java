@@ -7,7 +7,7 @@ import java.util.Dictionary;
 
 public class Decoder {
     public static String decode(String asciitext, Dictionary<String, Character> codes) {
-        String text = Bindecode(asciitext);
+        String text = Bindecode(asciitext, codes);
         StringBuilder decodedText = new StringBuilder();
         StringBuffer buffer = new StringBuffer();
         for(Character c: text.toCharArray()) {
@@ -20,10 +20,22 @@ public class Decoder {
         return decodedText.toString();
     }
 
-    public static String Bindecode(String text) {
+    public static String Bindecode(String text, Dictionary<String, Character> codes) {
         StringBuilder decodedText = new StringBuilder();
         for(Character c: text.toCharArray()) {
-            if (decodedText.length() / 8 == text.length() - 1) {
+            if (decodedText.length() / 8 == text.length() -1) {
+                //Extraño bug pero si el ultimo char tiene de codigo "0" no lo decodifica, lo ignora, este if solo se ejecuta en ese caso
+                if (Integer.toBinaryString(c).equals("0")) {
+                    StringBuilder temp = new StringBuilder();
+                    temp.append(Integer.toBinaryString(c));
+                    for (int i = 0; i < 8; i++) {
+                        temp.append("0");
+                        if (codes.get(temp.toString()) != null) {
+                            decodedText.append(temp.toString());
+                            return decodedText.toString();
+                        }
+                    }
+                }
                 decodedText.append(Integer.toBinaryString(c));
                 break;
             }
@@ -33,6 +45,7 @@ public class Decoder {
             }
             decodedText.append(binary);
 
+            //decodedText.append(Integer.toBinaryString(c));
         }
         return decodedText.toString();
     }

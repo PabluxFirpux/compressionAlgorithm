@@ -32,8 +32,7 @@ public class app {
     }
 
     public static void scanFile() {
-        //Turns out the+
-        // lgorithm used for decompressing directories also works if it's a single file, so this is redundant, but I'm keeping it here just for reference
+        //Turns out the algorithm used for decompressing directories also works if it's a single file, so this is redundant, but I'm keeping it here just for reference
         DecompFile file = new DecompFile("./test.pfc", DecompFile.Type.FILE);
         file.save();
     }

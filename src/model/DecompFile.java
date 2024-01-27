@@ -1,5 +1,6 @@
 package model;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 
 public class DecompFile {
@@ -32,13 +33,21 @@ public class DecompFile {
 
     private void generateDir(String codedText) {
         String[] parts = codedText.split("[\n](?<![\"][\n])", 2);
-        this.path = parts[0];
+        this.path = checkDuplicatePath(parts[0]);
         this.decodedText = Decoder.decodeFile(parts[1]);
+    }
+
+    private String checkDuplicatePath(String path) {
+        String[] parts = path.split("\\\\");
+        File f = new File(path);
+        parts[1] = (f.exists()) ? parts[1] + "_copy" : parts[1];
+        String newPath = String.join("\\", parts);
+        return newPath;
     }
 
     public void save() {
         try {
-            fhelper.writeToFile(path, decodedText);
+            fhelper.writeToFile(path, decodedText, false);
         } catch (Exception e) {
             System.out.println("Failed to decompress file");
         }

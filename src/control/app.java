@@ -2,6 +2,7 @@ package control;
 
 import model.*;
 
+import java.io.File;
 import java.sql.Time;
 
 public class app {
@@ -38,12 +39,16 @@ public class app {
     }
 
     public static void createFileOOP(String path) {
-        CompFile file = new CompFile(path);
+        File f = new File(path);
+        String root = f.getName();
+        CompFile file = new CompFile(path, root);
         file.save();
     }
 
     public static  void createDir(String path) {
-        CompDir dir = new CompDir(path);
+        File f = new File(path);
+        String root = f.getName();
+        CompDir dir = new CompDir(path, root);
         dir.save();
     }
 }

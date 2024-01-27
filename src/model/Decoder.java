@@ -24,7 +24,6 @@ public class Decoder {
         StringBuilder decodedText = new StringBuilder();
         for(Character c: text.toCharArray()) {
             if (decodedText.length() / 8 == text.length() -1) {
-                //Extraño bug pero si el ultimo char tiene de codigo "0" no lo decodifica, lo ignora, este if solo se ejecuta en ese caso
                 String temp = Integer.toBinaryString(c);
                 if (codes.get(temp.toString()) != null) {
                     decodedText.append(temp.toString());
@@ -43,7 +42,6 @@ public class Decoder {
                 binary = "0" + binary;
             }
             decodedText.append(binary);
-            //decodedText.append(Integer.toBinaryString(c));
         }
         return decodedText.toString();
     }

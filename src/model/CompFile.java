@@ -16,8 +16,17 @@ public class CompFile {
         this.text = text;
     }
 
-    public CompFile(String path) {
-        this.ogPath = path;
+    private String parsePath(String path, String root) {
+        String p = ".\\" + root;
+        String[] parts = path.split(root);
+        if (parts.length > 1) {
+            p += parts[1];
+        }
+        return p;
+    }
+
+    public CompFile(String path, String root) {
+        this.ogPath = parsePath(path, root);
         generate(path);
     }
 
@@ -38,7 +47,7 @@ public class CompFile {
     public void save() {
         String contents = ogPath + "\n" + table + text;
         try {
-            fhelper.writeToFile(path, contents);
+            fhelper.writeToFile(path, contents, true);
         } catch (Exception e) {
             System.out.println("File not found");
         }

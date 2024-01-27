@@ -80,11 +80,11 @@ public class fhelper {
         return contents;
     }
 
-    public static void writeToFile(String path, String contents) throws IOException {
+    public static void writeToFile(String path, String contents, boolean compMode) throws IOException {
         File file = new File(path);
         File dir = new File(getDirectory(path));
         dir.mkdirs();
-        if (file.exists()) {
+        if (compMode && file.exists()) {
             while (file.exists()) {
                 path = getCopiedFileName(path);
                 file = new File(path);
@@ -98,22 +98,23 @@ public class fhelper {
         fw.close();
     }
 
-    public static String getValidPath(String path) {
-        File file = new File(path);
-        if(!file.exists()) {
-            return path;
-        } else {
-            try {
-                return getValidPath(getCopiedFileName(path));
-            } catch (Exception e) {
-                return path + "_copy";
-            }
-        }
-    }
-
     private static String getCopiedFileName(String path) {
         String[] parts = path.split("\\.");
-        return parts[parts.length - 2] + "_copy." + parts[parts.length - 1];
+        //return parts[parts.length - 2] + "_copy." + parts[parts.length - 1];
+        File file = new File(path);
+        if (file.isDirectory()) {
+            return path + "_copy";
+        } else {
+            int i = 0;
+            int n = 0;
+            while (i < path.length()) {
+                if (path.charAt(i) == '.') {
+                    n = i;
+                }
+                i++;
+            }
+            return path.substring(0, n) + "_copy" + path.substring(n);
+        }
     }
 
     public static ArrayList<String> getFiles(String path) {

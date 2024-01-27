@@ -2,6 +2,7 @@ package control;
 
 import model.*;
 
+import java.io.File;
 import java.sql.Time;
 
 public class app {
@@ -32,18 +33,22 @@ public class app {
     }
 
     public static void scanFile() {
-        //Turns out the algorithm used for decompressing directories also works if it's a single file, so this is redundant but I'm keeping it here just for reference
+        //Turns out the algorithm used for decompressing directories also works if it's a single file, so this is redundant, but I'm keeping it here just for reference
         DecompFile file = new DecompFile("./test.pfc", DecompFile.Type.FILE);
         file.save();
     }
 
     public static void createFileOOP(String path) {
-        CompFile file = new CompFile(path);
+        File f = new File(path);
+        String root = f.getName();
+        CompFile file = new CompFile(path, root);
         file.save();
     }
 
     public static  void createDir(String path) {
-        CompDir dir = new CompDir(path);
+        File f = new File(path);
+        String root = f.getName();
+        CompDir dir = new CompDir(path, root);
         dir.save();
     }
 }
